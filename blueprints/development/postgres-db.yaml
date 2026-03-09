@@ -1,0 +1,64 @@
+id: postgres-db
+name: "PostgreSQL Database"
+description: "PostgreSQL 16 database server (database only, no admin UI)"
+icon: "🐘"
+network: "internal"
+tags:
+  - database
+  - postgres
+  - sql
+
+image: "postgres:16-alpine"
+
+environment:
+  POSTGRES_USER: "admin"
+  POSTGRES_DB: "trion_db"
+  PGDATA: "/var/lib/postgresql/data/pgdata"
+  POSTGRES_PASSWORD: "vault://POSTGRES_PASSWORD"
+
+ports:
+  - "5432:5432"
+
+resources:
+  cpu_limit: "2.0"
+  memory_limit: "1g"
+  memory_swap: "2g"
+  timeout_seconds: 0
+  pids_limit: 200
+
+allowed_exec:
+  - psql
+  - pg_dump
+  - pg_restore
+  - pg_isready
+  - sh
+  - bash
+
+secrets_required:
+  - name: POSTGRES_PASSWORD
+    description: "Database admin password"
+    optional: false
+
+storage_scope: "workspace"
+
+mounts:
+  - type: "volume"
+    container: "/var/lib/postgresql/data"
+    mode: "rw"
+
+healthcheck:
+  test: ["CMD-SHELL", "pg_isready -U admin -d trion_db"]
+  interval: "10s"
+  timeout: "5s"
+  retries: 5
+  start_period: "30s"
+
+system_prompt: |
+  You are a PostgreSQL database assistant. You can:
+  - Execute SQL queries via psql
+  - Create backups with pg_dump
+  - Restore from backups with pg_restore
+  - Check database health with pg_isready
+  
+  Always use proper SQL syntax and transaction safety.
+  Connection: psql -U admin -d trion_db

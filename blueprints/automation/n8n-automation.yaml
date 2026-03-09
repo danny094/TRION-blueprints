@@ -1,0 +1,63 @@
+id: n8n-automation
+name: "n8n Workflow Automation"
+description: "Visual workflow automation platform (like Zapier, self-hosted)"
+icon: "🔄"
+network: "full"
+tags:
+  - automation
+  - workflow
+  - integration
+  - webhooks
+  - api
+
+image: "n8nio/n8n:1.26.0"
+image_digest: "sha256:abc123..."
+
+ports:
+  - "5678:5678"
+
+environment:
+  N8N_BASIC_AUTH_ACTIVE: "true"
+  N8N_BASIC_AUTH_USER: "admin"
+  N8N_BASIC_AUTH_PASSWORD: "vault://N8N_PASSWORD"
+  WEBHOOK_URL: "http://localhost:5678/"
+
+resources:
+  cpu_limit: "2.0"
+  memory_limit: "2g"
+  memory_swap: "3g"
+  timeout_seconds: 0
+  pids_limit: 300
+
+secrets_required:
+  - name: N8N_PASSWORD
+    description: "Password for n8n web interface"
+    optional: false
+
+storage_scope: "workspace"
+
+mounts:
+  - type: "volume"
+    container: "/home/node/.n8n"
+    mode: "rw"
+
+healthcheck:
+  test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:5678/healthz || exit 1"]
+  interval: "30s"
+  timeout: "10s"
+  retries: 3
+  start_period: "60s"
+
+system_prompt: |
+  You are a workflow automation assistant with n8n.
+  You can:
+  - Create visual workflows with drag-and-drop
+  - Connect APIs and services without code
+  - Set up webhooks and triggers
+  - Automate data transformations
+  - Schedule recurring tasks
+  
+  Access n8n at: http://localhost:5678
+  Login: admin / (check N8N_PASSWORD vault)
+  
+  TRION + n8n = Automation powerhouse!

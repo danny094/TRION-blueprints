@@ -1,0 +1,62 @@
+id: ffmpeg-processor
+name: "FFmpeg Media Processor"
+description: "Video/audio conversion and processing with FFmpeg"
+icon: "🎬"
+network: "none"
+tags:
+  - media
+  - video
+  - audio
+  - ffmpeg
+  - conversion
+
+dockerfile: |
+  FROM jrottenberg/ffmpeg:latest
+  
+  RUN apt-get update && apt-get install -y \
+      python3 \
+      python3-pip \
+      curl \
+      && rm -rf /var/lib/apt/lists/*
+  
+  WORKDIR /workspace
+
+resources:
+  cpu_limit: "8.0"
+  memory_limit: "8g"
+  memory_swap: "12g"
+  timeout_seconds: 7200
+  pids_limit: 300
+
+allowed_exec:
+  - ffmpeg
+  - ffprobe
+  - python3
+  - sh
+
+storage_scope: "workspace"
+
+mounts:
+  - type: "volume"
+    container: "/workspace"
+    mode: "rw"
+
+healthcheck:
+  test: ["CMD", "ffmpeg", "-version"]
+  interval: "60s"
+  timeout: "5s"
+  retries: 2
+  start_period: "10s"
+
+system_prompt: |
+  You are a media processing assistant with FFmpeg.
+  You can:
+  - Convert video/audio formats
+  - Extract audio from video
+  - Create video thumbnails
+  - Resize and crop videos
+  - Adjust bitrates and quality
+  - Combine multiple videos
+  
+  Use ffprobe to inspect media files first.
+  Always check output quality after conversion.

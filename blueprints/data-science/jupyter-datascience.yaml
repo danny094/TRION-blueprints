@@ -1,0 +1,92 @@
+id: jupyter-datascience
+name: "Jupyter Data Science Lab"
+description: "Complete data science environment with Jupyter Lab, pandas, numpy, matplotlib, scikit-learn"
+icon: "📊"
+network: "bridge"
+tags:
+  - python
+  - data-science
+  - jupyter
+  - ml
+  - analytics
+
+dockerfile: |
+  FROM jupyter/scipy-notebook:latest
+  
+  USER root
+  
+  # Install additional data science packages
+  RUN pip install --no-cache-dir \
+      pandas \
+      numpy \
+      matplotlib \
+      seaborn \
+      scikit-learn \
+      plotly \
+      openpyxl \
+      sqlalchemy \
+      psycopg2-binary \
+      requests \
+      beautifulsoup4 \
+      jupyter-ai
+  
+  # Set up workspace
+  RUN mkdir -p /home/jovyan/work && \
+      chown -R $NB_UID:$NB_GID /home/jovyan/work
+  
+  USER $NB_UID
+  WORKDIR /home/jovyan/work
+
+ports:
+  - "8888:8888"
+
+environment:
+  JUPYTER_ENABLE_LAB: "yes"
+  JUPYTER_TOKEN: "vault://JUPYTER_TOKEN"
+
+resources:
+  cpu_limit: "4.0"
+  memory_limit: "4g"
+  memory_swap: "6g"
+  timeout_seconds: 0
+  pids_limit: 500
+
+allowed_exec:
+  - python
+  - python3
+  - jupyter
+  - pip
+  - conda
+  - sh
+  - bash
+
+secrets_required:
+  - name: JUPYTER_TOKEN
+    description: "Jupyter Lab access token (leave empty for auto-generated)"
+    optional: true
+
+storage_scope: "workspace"
+
+mounts:
+  - type: "volume"
+    container: "/home/jovyan/work"
+    mode: "rw"
+
+healthcheck:
+  test: ["CMD", "curl", "-f", "http://localhost:8888/api"]
+  interval: "30s"
+  timeout: "10s"
+  retries: 3
+  start_period: "60s"
+
+system_prompt: |
+  You are a data science assistant with access to a Jupyter Lab environment.
+  You can:
+  - Run Python code for data analysis
+  - Create and execute Jupyter notebooks
+  - Perform statistical analysis with pandas and numpy
+  - Create visualizations with matplotlib, seaborn, and plotly
+  - Build machine learning models with scikit-learn
+  
+  Access Jupyter Lab at: http://localhost:8888
+  Token is in the JUPYTER_TOKEN vault secret.

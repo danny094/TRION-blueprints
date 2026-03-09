@@ -1,0 +1,66 @@
+id: redis-cache
+name: "Redis Cache Server"
+description: "In-memory data structure store for caching and real-time applications"
+icon: "⚡"
+network: "internal"
+tags:
+  - cache
+  - redis
+  - database
+  - memory
+  - performance
+
+image: "redis:7-alpine"
+
+environment:
+  REDIS_PASSWORD: "vault://REDIS_PASSWORD"
+
+ports:
+  - "6379:6379"
+
+resources:
+  cpu_limit: "1.0"
+  memory_limit: "512m"
+  memory_swap: "1g"
+  timeout_seconds: 0
+  pids_limit: 100
+
+allowed_exec:
+  - redis-cli
+  - redis-benchmark
+  - sh
+
+secrets_required:
+  - name: REDIS_PASSWORD
+    description: "Redis server password"
+    optional: false
+
+storage_scope: "workspace"
+
+mounts:
+  - type: "volume"
+    container: "/data"
+    mode: "rw"
+
+healthcheck:
+  test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+  interval: "10s"
+  timeout: "3s"
+  retries: 5
+  start_period: "10s"
+
+system_prompt: |
+  You are a Redis cache assistant.
+  You can:
+  - Store and retrieve key-value data
+  - Use redis-cli for commands
+  - Set expiration times (TTL)
+  - Benchmark performance
+  - Monitor cache hit rates
+  
+  Common commands:
+  - SET key value
+  - GET key
+  - DEL key
+  - KEYS pattern
+  - TTL key

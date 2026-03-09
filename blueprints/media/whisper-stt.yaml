@@ -1,0 +1,77 @@
+id: whisper-stt
+name: "Whisper Speech-to-Text"
+description: "OpenAI Whisper AI for audio transcription with GPU support"
+icon: "🎤"
+network: "none"
+tags:
+  - ai
+  - audio
+  - transcription
+  - whisper
+  - ml
+
+dockerfile: |
+  FROM python:3.11-slim
+  
+  RUN apt-get update && apt-get install -y \
+      ffmpeg \
+      git \
+      curl \
+      && rm -rf /var/lib/apt/lists/*
+  
+  RUN pip install --no-cache-dir \
+      openai-whisper \
+      torch \
+      torchaudio
+  
+  WORKDIR /workspace
+
+runtime: "nvidia"
+
+devices:
+  - "/dev/dri:/dev/dri"
+  - "/dev/nvidia0:/dev/nvidia0"
+  - "/dev/nvidiactl:/dev/nvidiactl"
+
+resources:
+  cpu_limit: "4.0"
+  memory_limit: "4g"
+  memory_swap: "6g"
+  timeout_seconds: 3600
+  pids_limit: 200
+  shm_size: "2g"
+
+allowed_exec:
+  - python
+  - python3
+  - whisper
+  - ffmpeg
+  - sh
+
+storage_scope: "workspace"
+
+mounts:
+  - type: "volume"
+    container: "/workspace"
+    mode: "rw"
+
+healthcheck:
+  test: ["CMD", "python3", "-c", "import whisper; print('OK')"]
+  interval: "60s"
+  timeout: "10s"
+  retries: 2
+  start_period: "30s"
+
+system_prompt: |
+  You are an AI transcription assistant using OpenAI Whisper.
+  You can:
+  - Transcribe audio files to text
+  - Support multiple languages
+  - Generate timestamps
+  - Handle various audio formats (via ffmpeg)
+  - Use GPU acceleration for faster processing
+  
+  Models available: tiny, base, small, medium, large
+  Larger models = better accuracy but slower
+  
+  GPU is required for optimal performance.

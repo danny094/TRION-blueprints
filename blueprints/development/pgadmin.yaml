@@ -1,0 +1,63 @@
+id: pgadmin
+name: "pgAdmin Web UI"
+description: "Web-based PostgreSQL administration interface (requires separate PostgreSQL server)"
+icon: "🔧"
+network: "bridge"
+tags:
+  - database
+  - postgres
+  - admin
+  - ui
+
+image: "dpage/pgadmin4:latest"
+
+environment:
+  PGADMIN_DEFAULT_EMAIL: "admin@trion.local"
+  PGADMIN_DEFAULT_PASSWORD: "vault://PGADMIN_PASSWORD"
+  PGADMIN_CONFIG_SERVER_MODE: "False"
+
+ports:
+  - "8080:80"
+
+resources:
+  cpu_limit: "1.0"
+  memory_limit: "512m"
+  memory_swap: "1g"
+  timeout_seconds: 0
+  pids_limit: 100
+
+allowed_exec:
+  - sh
+  - bash
+
+secrets_required:
+  - name: PGADMIN_PASSWORD
+    description: "pgAdmin login password"
+    optional: false
+
+storage_scope: "workspace"
+
+mounts:
+  - type: "volume"
+    container: "/var/lib/pgadmin"
+    mode: "rw"
+
+healthcheck:
+  test: ["CMD-SHELL", "wget -q --spider http://localhost:80/misc/ping || exit 1"]
+  interval: "30s"
+  timeout: "10s"
+  retries: 3
+  start_period: "60s"
+
+system_prompt: |
+  You are a pgAdmin assistant for PostgreSQL management.
+  
+  Access pgAdmin at: http://localhost:8080
+  Login: admin@trion.local / (check PGADMIN_PASSWORD)
+  
+  To connect to PostgreSQL:
+  1. Add New Server in pgAdmin
+  2. Host: postgres-db container name or IP
+  3. Port: 5432
+  4. Username: admin
+  5. Password: (PostgreSQL password from vault)
