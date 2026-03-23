@@ -13,6 +13,14 @@
     "summary": "Installiert Host-Sunshine, Xorg-Headless-Konfiguration, uinput-Prep und Launcher-Skripte.",
     "auto_enable": true,
     "auto_start": true,
+    "host_packages_required": [
+      {
+        "name": "openbox",
+        "reason": "Window manager needed for Steam Big Picture fullscreen on host X session. Without openbox, Steam Big Picture may not fill the screen correctly.",
+        "install_hint": "sudo apt install openbox",
+        "optional": false
+      }
+    ],
     "access_links": [
       {
         "host_ip": "0.0.0.0",
@@ -76,10 +84,7 @@
   },
   "container_addons": {
     "install_root": "intelligence_modules/container_addons",
-    "root_files": [
-      "ADDON_SPEC.md",
-      "README.md"
-    ],
+    "root_files": [ "ADDON_SPEC.md", "README.md" ],
     "profiles": [
       "profiles/gaming-station/00-profile.md",
       "profiles/gaming-station/10-runtime.md",
@@ -104,6 +109,7 @@
   "notes": [
     "Sunshine laeuft hostnah, nicht im Container.",
     "Dieses Paket ist absichtlich optional und nicht fest in TRION-Core verdrahtet.",
-    "Ein spaeterer Installer kann diese Dateien in ~/.config/systemd/user, ~/.local/bin, /usr/local/bin und /etc/X11 materialisieren."
+    "Ein spaeterer Installer kann diese Dateien in ~/.config/systemd/user, ~/.local/bin, /usr/local/bin und /etc/X11 materialisieren.",
+    "Fuer sauberes Big-Picture-Fullscreen braucht die Host-X-Session einen kleinen Window Manager. Bewiesen funktioniert: openbox. Der Installer prueft host_packages_required, kann aber noch nicht automatisch installieren — das muss manuell erfolgen: sudo apt install openbox"
   ]
 }

@@ -18,6 +18,13 @@ xhost +local: >/dev/null 2>&1 || true
 
 xrandr --output {{XRANDR_OUTPUT_NAME}} --mode 1920x1080 >/dev/null 2>&1 || true
 
+if command -v openbox >/dev/null 2>&1; then
+  openbox --sm-disable >/dev/null 2>&1 &
+  openbox_pid=$!
+else
+  openbox_pid=""
+fi
+
 mkdir -p "$(dirname "{{SUNSHINE_CONFIG_PATH}}")" "$(dirname "{{SUNSHINE_LOG_PATH}}")"
 
 "${sunshine_bin}" "{{SUNSHINE_CONFIG_PATH}}" \
@@ -26,6 +33,9 @@ sunshine_pid=$!
 
 cleanup() {
   kill "${sunshine_pid}" 2>/dev/null || true
+  if [[ -n "${openbox_pid:-}" ]]; then
+    kill "${openbox_pid}" 2>/dev/null || true
+  fi
 }
 trap cleanup EXIT INT TERM
 
