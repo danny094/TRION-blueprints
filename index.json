@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "trion_compat": {
     "min": "2.0.0",
     "max": "3.0.0"
@@ -18,16 +18,13 @@
       "requires_runtime": "none",
       "requires_approval": false,
       "requires_gpu": false,
+      "package_type": "blueprint",
       "bundle_url": "bundles/postgres-db.trion-bundle.tar.gz",
       "yaml_url": "blueprints/development/postgres-db.yaml",
       "author": "danny094",
       "version": "1.0.0",
       "trusted_level": "verified",
-      "health_profile": {
-        "timeout": 30,
-        "retries": 5,
-        "check_interval": 10
-      },
+      "health_profile": { "timeout": 30, "retries": 5, "check_interval": 10 },
       "downloads": 0,
       "stars": 0
     },
@@ -44,16 +41,13 @@
       "requires_runtime": "none",
       "requires_approval": false,
       "requires_gpu": false,
+      "package_type": "blueprint",
       "bundle_url": "bundles/pgadmin.trion-bundle.tar.gz",
       "yaml_url": "blueprints/development/pgadmin.yaml",
       "author": "danny094",
       "version": "1.0.0",
       "trusted_level": "verified",
-      "health_profile": {
-        "timeout": 60,
-        "retries": 3,
-        "check_interval": 30
-      },
+      "health_profile": { "timeout": 60, "retries": 3, "check_interval": 30 },
       "downloads": 0,
       "stars": 0
     },
@@ -70,16 +64,13 @@
       "requires_runtime": "none",
       "requires_approval": false,
       "requires_gpu": false,
+      "package_type": "blueprint",
       "bundle_url": "bundles/redis-cache.trion-bundle.tar.gz",
       "yaml_url": "blueprints/development/redis-cache.yaml",
       "author": "danny094",
       "version": "1.0.0",
       "trusted_level": "verified",
-      "health_profile": {
-        "timeout": 10,
-        "retries": 5,
-        "check_interval": 10
-      },
+      "health_profile": { "timeout": 10, "retries": 5, "check_interval": 10 },
       "downloads": 0,
       "stars": 0
     },
@@ -96,16 +87,13 @@
       "requires_runtime": "none",
       "requires_approval": false,
       "requires_gpu": false,
+      "package_type": "blueprint",
       "bundle_url": "bundles/jupyter-datascience.trion-bundle.tar.gz",
       "yaml_url": "blueprints/data-science/jupyter-datascience.yaml",
       "author": "danny094",
       "version": "1.0.0",
       "trusted_level": "verified",
-      "health_profile": {
-        "timeout": 60,
-        "retries": 3,
-        "check_interval": 30
-      },
+      "health_profile": { "timeout": 60, "retries": 3, "check_interval": 30 },
       "downloads": 0,
       "stars": 0
     },
@@ -122,16 +110,13 @@
       "requires_runtime": "none",
       "requires_approval": false,
       "requires_gpu": false,
+      "package_type": "blueprint",
       "bundle_url": "bundles/ffmpeg-processor.trion-bundle.tar.gz",
       "yaml_url": "blueprints/media/ffmpeg-processor.yaml",
       "author": "danny094",
       "version": "1.0.0",
       "trusted_level": "verified",
-      "health_profile": {
-        "timeout": 10,
-        "retries": 2,
-        "check_interval": 60
-      },
+      "health_profile": { "timeout": 10, "retries": 2, "check_interval": 60 },
       "downloads": 0,
       "stars": 0
     },
@@ -148,16 +133,13 @@
       "requires_runtime": "nvidia",
       "requires_approval": true,
       "requires_gpu": true,
+      "package_type": "blueprint",
       "bundle_url": "bundles/whisper-stt.trion-bundle.tar.gz",
       "yaml_url": "blueprints/media/whisper-stt.yaml",
       "author": "danny094",
       "version": "1.0.0",
       "trusted_level": "verified",
-      "health_profile": {
-        "timeout": 30,
-        "retries": 2,
-        "check_interval": 60
-      },
+      "health_profile": { "timeout": 30, "retries": 2, "check_interval": 60 },
       "downloads": 0,
       "stars": 0
     },
@@ -174,16 +156,39 @@
       "requires_runtime": "none",
       "requires_approval": true,
       "requires_gpu": false,
+      "package_type": "blueprint",
       "bundle_url": "bundles/n8n-automation.trion-bundle.tar.gz",
       "yaml_url": "blueprints/automation/n8n-automation.yaml",
       "author": "danny094",
       "version": "1.0.0",
       "trusted_level": "verified",
-      "health_profile": {
-        "timeout": 60,
-        "retries": 3,
-        "check_interval": 30
-      },
+      "health_profile": { "timeout": 60, "retries": 3, "check_interval": 30 },
+      "downloads": 0,
+      "stars": 0
+    },
+    {
+      "id": "gaming-station",
+      "name": "Gaming Station",
+      "description": "Steam in container + host-side Sunshine streaming. Moonlight-ready gaming environment with NVIDIA GPU support.",
+      "category": "gaming",
+      "tags": ["gaming", "steam", "sunshine", "moonlight", "nvidia", "streaming"],
+      "icon": "🎮",
+      "difficulty": "advanced",
+      "network": "host",
+      "requires_secrets": false,
+      "requires_runtime": "nvidia",
+      "requires_approval": true,
+      "requires_gpu": true,
+      "package_type": "composite_addon",
+      "has_host_companion": true,
+      "supports_trion_addons": true,
+      "bundle_url": "bundles/gaming-station.trion-bundle.tar.gz",
+      "yaml_url": "blueprints/gaming/gaming-station.yaml",
+      "package_url": "packages/gaming-station/package.json",
+      "author": "danny094",
+      "version": "1.0.0",
+      "trusted_level": "verified",
+      "health_profile": { "timeout": 120, "retries": 3, "check_interval": 30 },
       "downloads": 0,
       "stars": 0
     }

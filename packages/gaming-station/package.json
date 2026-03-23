@@ -1,0 +1,100 @@
+{
+  "id": "gaming-station",
+  "name": "Gaming Station",
+  "version": "1.0.0",
+  "package_type": "composite_addon",
+  "description": "Optionales Hybrid-Addon fuer Steam im Container plus hostnahes Sunshine/Xorg-Bridge-Setup.",
+  "blueprints": [
+    "gaming-station"
+  ],
+  "host_companion": {
+    "id": "sunshine-host-bridge",
+    "kind": "user_service_bundle",
+    "summary": "Installiert Host-Sunshine, Xorg-Headless-Konfiguration, uinput-Prep und Launcher-Skripte.",
+    "auto_enable": true,
+    "auto_start": true,
+    "access_links": [
+      {
+        "host_ip": "0.0.0.0",
+        "host_port": "47990",
+        "container_port": "47990/tcp",
+        "service_name": "Sunshine Web UI",
+        "access_label": "Open Sunshine UI",
+        "access_scheme": "https",
+        "access_path": "/welcome",
+        "access_kind": "web_ui"
+      }
+    ],
+    "install_targets": {
+      "service_name": "sunshine-host.service",
+      "start_script_name": "start-host-sunshine-session.sh",
+      "xsession_script_name": "host-sunshine-xsession.sh",
+      "steam_script_name": "gaming-station-steam.sh",
+      "prepare_script_path": "/usr/local/bin/sunshine-host-prepare.sh",
+      "sunshine_config_path": "/home/danny/.config/sunshine/host-test/sunshine.conf",
+      "sunshine_apps_path": "/home/danny/.config/sunshine/apps.json",
+      "sunshine_log_path": "/home/danny/.local/state/sunshine-host.log",
+      "xorg_conf_path": "/etc/X11/xorg.conf.d/90-sunshine-headless.conf",
+      "xwrapper_path": "/etc/X11/Xwrapper.config",
+      "edid_path": "/etc/X11/edid/monitor-1080p.bin"
+    },
+    "binary_bootstrap": {
+      "binary_path": "/usr/bin/sunshine",
+      "deb_url": "https://sourceforge.net/projects/sunshine.mirror/files/v2025.923.33222/sunshine-ubuntu-24.04-amd64.deb/download",
+      "package_name": "sunshine",
+      "version": "2025.923.33222"
+    },
+    "files": [
+      "README.md",
+      "host/bin/start-host-sunshine-session.sh",
+      "host/bin/host-sunshine-xsession.sh",
+      "host/bin/gaming-station-steam.sh",
+      "host/bin/sunshine-host-prepare.sh",
+      "host/systemd-user/sunshine-host.service",
+      "host/config/sunshine/sunshine.conf",
+      "host/config/sunshine/apps.json",
+      "host/etc/X11/90-sunshine-headless.conf",
+      "host/etc/X11/Xwrapper.config",
+      "host/etc/X11/edid/monitor-1080p.bin.hex"
+    ]
+  },
+  "storage": {
+    "paths": [
+      "/data/services/gaming-station/config",
+      "/data/services/gaming-station/data",
+      "/data/services/gaming-station/data/steam-home"
+    ]
+  },
+  "container_addons": {
+    "install_root": "intelligence_modules/container_addons",
+    "root_files": [
+      "ADDON_SPEC.md",
+      "README.md"
+    ],
+    "profiles": [
+      "profiles/gaming-station/00-profile.md",
+      "profiles/gaming-station/10-runtime.md",
+      "profiles/gaming-station/20-diagnostics.md",
+      "profiles/gaming-station/30-known-issues.md",
+      "profiles/gaming-station/README.md"
+    ],
+    "dependencies": [
+      "profiles/generic-linux/00-shell-basics.md",
+      "profiles/runtime-supervisord/10-supervisord.md",
+      "profiles/headless-x11-novnc/10-headless-x11-novnc.md",
+      "profiles/apps-sunshine/20-sunshine.md",
+      "profiles/apps-steam-headless/20-steam-headless.md"
+    ]
+  },
+  "postchecks": [
+    "host_sunshine_service_enabled",
+    "host_xorg_ready",
+    "container_display_bridge_ready",
+    "steam_home_persistent"
+  ],
+  "notes": [
+    "Sunshine laeuft hostnah, nicht im Container.",
+    "Dieses Paket ist absichtlich optional und nicht fest in TRION-Core verdrahtet.",
+    "Ein spaeterer Installer kann diese Dateien in ~/.config/systemd/user, ~/.local/bin, /usr/local/bin und /etc/X11 materialisieren."
+  ]
+}
