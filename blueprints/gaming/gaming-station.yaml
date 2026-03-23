@@ -12,8 +12,11 @@ tags:
   - nvidia
   - streaming
 
-image: "josh5/steam-headless:latest"
-dockerfile: "package/Dockerfile"
+dockerfile: |
+  FROM josh5/steam-headless:latest
+  RUN printf '#!/usr/bin/env bash\nset -euo pipefail\nSTEAM_HOME="${STEAM_HOME:-/home/default/.steam}"\nfor base in \\\n  "${STEAM_HOME}/steam/config" \\\n  "${STEAM_HOME}/steam/ubuntu12_32" \\\n  "/home/default/.local/share/Steam/config" \\\n  "/home/default/.local/share/Steam/ubuntu12_32"; do\n  rm -f "${base}/SingletonLock" "${base}/SingletonCookie" "${base}/SingletonSocket" "${base}/.lock" 2>/dev/null || true\ndone\nrm -f /tmp/steam.pid /tmp/steamwebhelper.pid 2>/dev/null || true\nfor s in /tmp/.steam-*; do [ -S "${s}" ] && rm -f "${s}" || true; done\necho "[prestart] cleanup done"\n' > /usr/local/bin/gaming-station-prestart.sh && chmod +x /usr/local/bin/gaming-station-prestart.sh
+  RUN printf '#!/usr/bin/env bash\nset -euo pipefail\necho "[entrypoint] running prestart cleanup..."\n/usr/local/bin/gaming-station-prestart.sh\necho "[entrypoint] handing off to /entrypoint.sh"\nexec /entrypoint.sh "$@"\n' > /usr/local/bin/gaming-station-entrypoint.sh && chmod +x /usr/local/bin/gaming-station-entrypoint.sh
+  ENTRYPOINT ["/usr/local/bin/gaming-station-entrypoint.sh"]
 
 privileged: true
 
