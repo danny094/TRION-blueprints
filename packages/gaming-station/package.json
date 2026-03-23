@@ -59,6 +59,15 @@
     ]
   },
   "storage": {
+    "scope": {
+      "name": "gaming-station-host-bridge",
+      "roots": [
+        { "path": "/data/services/gaming-station/config", "mode": "rw" },
+        { "path": "/data/services/gaming-station/data",   "mode": "rw" },
+        { "path": "/tmp/.X11-unix",                       "mode": "rw" },
+        { "path": "/run/user/1000/pulse",                 "mode": "rw" }
+      ]
+    },
     "paths": [
       "/data/services/gaming-station/config",
       "/data/services/gaming-station/data",

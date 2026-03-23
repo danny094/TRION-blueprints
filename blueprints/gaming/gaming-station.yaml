@@ -29,6 +29,8 @@ runtime: nvidia
 
 ipc_mode: "host"
 
+storage_scope: "gaming-station-host-bridge"
+
 environment:
   TZ: "UTC"
   PUID: "1000"
