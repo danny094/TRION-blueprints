@@ -13,6 +13,7 @@ tags:
   - streaming
 
 image: "josh5/steam-headless:latest"
+dockerfile: "package/Dockerfile"
 
 privileged: true
 
@@ -37,21 +38,6 @@ resources:
   memory_swap: "2048m"
   timeout_seconds: 0
   pids_limit: 512
-
-pre_start_exec:
-  user: "default"
-  command: >-
-    bash -c '
-    for base in
-      /home/default/.steam/steam/config
-      /home/default/.steam/steam/ubuntu12_32
-      /home/default/.local/share/Steam/config
-      /home/default/.local/share/Steam/ubuntu12_32; do
-      rm -f "$base/SingletonLock" "$base/SingletonCookie" "$base/SingletonSocket" "$base/.lock" 2>/dev/null || true;
-    done;
-    rm -f /tmp/steam.pid /tmp/steamwebhelper.pid 2>/dev/null || true;
-    for s in /tmp/.steam-*; do [ -S "$s" ] && rm -f "$s" || true; done;
-    echo prestart-cleanup-done'
 
 environment:
   TZ: "UTC"
