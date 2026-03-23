@@ -31,6 +31,13 @@ ipc_mode: "host"
 
 storage_scope: "gaming-station-host-bridge"
 
+resources:
+  cpu_limit: "1.5"
+  memory_limit: "1536m"
+  memory_swap: "2048m"
+  timeout_seconds: 0
+  pids_limit: 512
+
 environment:
   TZ: "UTC"
   PUID: "1000"
