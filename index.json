@@ -10,7 +10,11 @@
       "name": "PostgreSQL Database",
       "description": "PostgreSQL 16 database server (database only, no admin UI)",
       "category": "development",
-      "tags": ["database", "postgres", "sql"],
+      "tags": [
+        "database",
+        "postgres",
+        "sql"
+      ],
       "icon": "🐘",
       "difficulty": "easy",
       "network": "internal",
@@ -24,7 +28,11 @@
       "author": "danny094",
       "version": "1.0.0",
       "trusted_level": "verified",
-      "health_profile": { "timeout": 30, "retries": 5, "check_interval": 10 },
+      "health_profile": {
+        "timeout": 30,
+        "retries": 5,
+        "check_interval": 10
+      },
       "downloads": 0,
       "stars": 0
     },
@@ -33,7 +41,12 @@
       "name": "pgAdmin Web UI",
       "description": "Web-based PostgreSQL administration interface",
       "category": "development",
-      "tags": ["database", "postgres", "admin", "ui"],
+      "tags": [
+        "database",
+        "postgres",
+        "admin",
+        "ui"
+      ],
       "icon": "🔧",
       "difficulty": "easy",
       "network": "bridge",
@@ -47,7 +60,11 @@
       "author": "danny094",
       "version": "1.0.0",
       "trusted_level": "verified",
-      "health_profile": { "timeout": 60, "retries": 3, "check_interval": 30 },
+      "health_profile": {
+        "timeout": 60,
+        "retries": 3,
+        "check_interval": 30
+      },
       "downloads": 0,
       "stars": 0
     },
@@ -56,7 +73,13 @@
       "name": "Redis Cache Server",
       "description": "In-memory data structure store for caching",
       "category": "development",
-      "tags": ["cache", "redis", "database", "memory", "performance"],
+      "tags": [
+        "cache",
+        "redis",
+        "database",
+        "memory",
+        "performance"
+      ],
       "icon": "⚡",
       "difficulty": "easy",
       "network": "internal",
@@ -70,7 +93,11 @@
       "author": "danny094",
       "version": "1.0.0",
       "trusted_level": "verified",
-      "health_profile": { "timeout": 10, "retries": 5, "check_interval": 10 },
+      "health_profile": {
+        "timeout": 10,
+        "retries": 5,
+        "check_interval": 10
+      },
       "downloads": 0,
       "stars": 0
     },
@@ -79,7 +106,13 @@
       "name": "Jupyter Data Science Lab",
       "description": "Complete data science environment with Jupyter Lab",
       "category": "data-science",
-      "tags": ["python", "data-science", "jupyter", "ml", "analytics"],
+      "tags": [
+        "python",
+        "data-science",
+        "jupyter",
+        "ml",
+        "analytics"
+      ],
       "icon": "📊",
       "difficulty": "medium",
       "network": "bridge",
@@ -93,7 +126,11 @@
       "author": "danny094",
       "version": "1.0.0",
       "trusted_level": "verified",
-      "health_profile": { "timeout": 60, "retries": 3, "check_interval": 30 },
+      "health_profile": {
+        "timeout": 60,
+        "retries": 3,
+        "check_interval": 30
+      },
       "downloads": 0,
       "stars": 0
     },
@@ -102,7 +139,13 @@
       "name": "FFmpeg Media Processor",
       "description": "Video/audio conversion and processing",
       "category": "media",
-      "tags": ["media", "video", "audio", "ffmpeg", "conversion"],
+      "tags": [
+        "media",
+        "video",
+        "audio",
+        "ffmpeg",
+        "conversion"
+      ],
       "icon": "🎬",
       "difficulty": "easy",
       "network": "none",
@@ -116,7 +159,11 @@
       "author": "danny094",
       "version": "1.0.0",
       "trusted_level": "verified",
-      "health_profile": { "timeout": 10, "retries": 2, "check_interval": 60 },
+      "health_profile": {
+        "timeout": 10,
+        "retries": 2,
+        "check_interval": 60
+      },
       "downloads": 0,
       "stars": 0
     },
@@ -125,7 +172,13 @@
       "name": "Whisper Speech-to-Text",
       "description": "OpenAI Whisper AI for audio transcription with GPU support",
       "category": "media",
-      "tags": ["ai", "audio", "transcription", "whisper", "ml"],
+      "tags": [
+        "ai",
+        "audio",
+        "transcription",
+        "whisper",
+        "ml"
+      ],
       "icon": "🎤",
       "difficulty": "advanced",
       "network": "none",
@@ -139,7 +192,11 @@
       "author": "danny094",
       "version": "1.0.0",
       "trusted_level": "verified",
-      "health_profile": { "timeout": 30, "retries": 2, "check_interval": 60 },
+      "health_profile": {
+        "timeout": 30,
+        "retries": 2,
+        "check_interval": 60
+      },
       "downloads": 0,
       "stars": 0
     },
@@ -148,7 +205,13 @@
       "name": "n8n Workflow Automation",
       "description": "Visual workflow automation platform (self-hosted)",
       "category": "automation",
-      "tags": ["automation", "workflow", "integration", "webhooks", "api"],
+      "tags": [
+        "automation",
+        "workflow",
+        "integration",
+        "webhooks",
+        "api"
+      ],
       "icon": "🔄",
       "difficulty": "medium",
       "network": "full",
@@ -162,7 +225,11 @@
       "author": "danny094",
       "version": "1.0.0",
       "trusted_level": "verified",
-      "health_profile": { "timeout": 60, "retries": 3, "check_interval": 30 },
+      "health_profile": {
+        "timeout": 60,
+        "retries": 3,
+        "check_interval": 30
+      },
       "downloads": 0,
       "stars": 0
     },
@@ -171,10 +238,17 @@
       "name": "Gaming Station",
       "description": "Steam in container + host-side Sunshine streaming. Moonlight-ready gaming environment with NVIDIA GPU support.",
       "category": "gaming",
-      "tags": ["gaming", "steam", "sunshine", "moonlight", "nvidia", "streaming"],
+      "tags": [
+        "gaming",
+        "steam",
+        "sunshine",
+        "moonlight",
+        "nvidia",
+        "streaming"
+      ],
       "icon": "🎮",
       "difficulty": "advanced",
-      "network": "host",
+      "network": "full",
       "requires_secrets": false,
       "requires_runtime": "nvidia",
       "requires_approval": true,
@@ -188,7 +262,11 @@
       "author": "danny094",
       "version": "1.0.0",
       "trusted_level": "verified",
-      "health_profile": { "timeout": 120, "retries": 3, "check_interval": 30 },
+      "health_profile": {
+        "timeout": 120,
+        "retries": 3,
+        "check_interval": 30
+      },
       "downloads": 0,
       "stars": 0
     }
