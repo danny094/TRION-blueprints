@@ -65,10 +65,22 @@ normalize_bigpicture_window() {
   return 0
 }
 
+steam_is_running() {
+  docker exec -u default "${container_id}" \
+    pgrep -f 'ubuntu12_32/steam' >/dev/null 2>&1
+}
+
 case "${action}" in
   open-bigpicture)
-    docker exec -u default "${container_id}" env DISPLAY=:0 HOME=/home/default \
-      /home/default/.steam/ubuntu12_32/steam steam://open/bigpicture
+    if steam_is_running; then
+      # Steam already running — forward URI directly
+      docker exec -u default "${container_id}" env DISPLAY=:0 HOME=/home/default \
+        /home/default/.steam/ubuntu12_32/steam steam://open/bigpicture 2>/dev/null || true
+    else
+      # Cold start — launch steam.sh in background then normalize window
+      docker exec -d -u default "${container_id}" env DISPLAY=:0 HOME=/home/default \
+        /usr/games/steam ${STEAM_ARGS:-} 2>/dev/null || true
+    fi
     normalize_bigpicture_window
     ;;
   ensure-bigpicture-window)
