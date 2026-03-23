@@ -3,7 +3,7 @@ name: "Gaming Station"
 description: "Steam in container, Sunshine on host. Moonlight-ready gaming environment with NVIDIA GPU passthrough."
 icon: "🎮"
 category: gaming
-network: "host"
+network: "full"
 tags:
   - gaming
   - steam
@@ -13,10 +13,6 @@ tags:
   - streaming
 
 image: "ghcr.io/games-on-whales/steam:edge"
-
-# Host-Companion liefert Sunshine, Xorg und uinput.
-# Dieses YAML beschreibt nur den Container-Teil (Steam Bridge).
-# Host-Setup: siehe packages/gaming-station/package.json
 
 environment:
   DISPLAY: ":0"
@@ -29,14 +25,17 @@ resources:
   timeout_seconds: 0
   pids_limit: 0
 
-volumes:
-  - host: "/data/services/gaming-station/data/steam-home"
+mounts:
+  - type: "bind"
+    host: "/data/services/gaming-station/data/steam-home"
     container: "/home/default/.steam"
     mode: "rw"
-  - host: "/data/services/gaming-station/data/games"
+  - type: "bind"
+    host: "/data/services/gaming-station/data/games"
     container: "/mnt/games"
     mode: "rw"
-  - host: "/data/services/gaming-station/config"
+  - type: "bind"
+    host: "/data/services/gaming-station/config"
     container: "/config"
     mode: "rw"
 
@@ -54,19 +53,8 @@ healthcheck:
   retries: 3
   start_period: "120s"
 
-# Host-Companion-Zugänge (synthetisch via package.json gesetzt)
-access_links:
-  - label: "Sunshine Web UI"
-    url: "https://localhost:47990"
-  - label: "Desktop (noVNC)"
-    url: "http://localhost:47991"
-
-# Schlanker system_prompt — container-spezifisches Wissen kommt aus container_addons
 system_prompt: |
   You are assisting with the gaming-station container.
   Steam runs inside this container. Sunshine streams from the host.
   Use supervisorctl to manage processes inside the container.
   For deep diagnostics, refer to the loaded container_addons context.
-
-# Addon-Profil für TRION shell
-addon_profile: "gaming-station"
